@@ -1,6 +1,7 @@
-import path from 'path'
-import { runMigration } from './src/migration';
+import { run } from './src/migration'
+import { setup } from './src/versioning'
 
 (async function() {
-    await runMigration({ filePath: path.join(__dirname, 'migrations', '1-sample.js') })
+    await setup('master')
+    await run('master')
 }())
