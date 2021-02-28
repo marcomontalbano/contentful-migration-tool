@@ -2,11 +2,21 @@ import { createClient } from 'contentful-management'
 import { Environment, Space } from 'contentful-management/dist/typings/export-types'
 
 export const getSpace = (() => {
+    const { CONTENT_MANAGEMENT_TOKEN, SPACE_ID } = process.env
+
+    if (!CONTENT_MANAGEMENT_TOKEN) {
+        throw new Error('The environment variable "CONTENT_MANAGEMENT_TOKEN" is missing')
+    }
+
+    if (!SPACE_ID) {
+        throw new Error('The environment variable "SPACE_ID" is missing')
+    }
+
     const client = createClient({
-        accessToken: process.env.CONTENT_MANAGEMENT_TOKEN
+        accessToken: CONTENT_MANAGEMENT_TOKEN
     })
 
-    const space = client.getSpace(process.env.SPACE_ID)
+    const space = client.getSpace(SPACE_ID)
 
     return (): Promise<Space> => space
 })()

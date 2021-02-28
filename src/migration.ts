@@ -1,6 +1,6 @@
 import { Environment } from 'contentful-management/dist/typings/export-types';
 import { RunMigrationConfig, runMigration as contentfulRunMigration } from 'contentful-migration';
-import { readdirSync } from 'fs';
+import { existsSync, readdirSync } from 'fs';
 import { resolve } from 'path';
 import { getVersion, updateVersion } from './versioning';
 
@@ -17,9 +17,13 @@ const getMigrationList = async (environment: Environment | string): Promise<Migr
 
     const migrationFolder = resolve(__dirname, '..', 'migrations')
 
+    if (!existsSync(migrationFolder)) {
+        throw new Error('The "/migrations" folder is missing')
+    }
+
     return readdirSync(migrationFolder)
         .reduce((accumulator, filename) => {
-            const groups = filename.match(/^(?<version>\d+)-(?<name>.*)\.js$/)?.groups
+            const groups = filename.match(/^(?<version>\d+)-(?<name>.*)\.[ts|js]+$/)?.groups
             const { version, name } = groups || {}
 
             if (!groups || !version || !name) {

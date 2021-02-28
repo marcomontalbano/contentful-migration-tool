@@ -1,0 +1,9 @@
+coverage
+migrations
+node_modules
+Dockerfile*
+.git
+.dockerignore
+.env
+.gitignore
+.nvmrc
