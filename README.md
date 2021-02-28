@@ -11,15 +11,15 @@ docker run --rm -e CONTENT_MANAGEMENT_TOKEN=$CONTENT_MANAGEMENT_TOKEN -e SPACE_I
 
 #### Environment Variables
 
-* **CONTENT_MANAGEMENT_TOKEN** - *required* - Contentful Content Management Token. You can create one from the section *API keys* under your space settings.
+* **`CONTENT_MANAGEMENT_TOKEN`** - ***required*** - Contentful Content Management Token. You can create one from the section *API keys* under your space settings.
 
-* **SPACE_ID** - *required* - Contentful Space ID. You can get the Space ID from the section *General settings* under your space settings. The Space ID is also visibile in the url.
+* **`SPACE_ID`** - ***required*** - Contentful Space ID. You can get the Space ID from the section *General settings* under your space settings. The Space ID is also visibile in the url.
 
-* **ENVIRONMENT** - *required* - Contentful Environment.
+* **`ENVIRONMENT`** - ***required*** - Contentful Environment.
 
 #### Volumes
 
-* **/migrations** - *required* - Migrations folder.
+* **`/migrations`** - ***required*** - Migrations folder.
 
 
 ### Migrations
