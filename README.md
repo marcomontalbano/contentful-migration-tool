@@ -1,9 +1,13 @@
 # Contentful Migration
 
+:warning:   Work In Progress!
 
 ## Usage
 
 ```sh
+# build
+docker build . -t contentful-migration
+
 docker run --rm -e CONTENT_MANAGEMENT_TOKEN=$CONTENT_MANAGEMENT_TOKEN -e SPACE_ID=$SPACE_ID -e ENVIRONMENT=$ENVIRONMENT -v $(pwd)/migrations:/migrations contentful-migration:latest
 ```
 
