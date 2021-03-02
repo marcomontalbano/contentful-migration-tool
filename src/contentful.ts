@@ -1,7 +1,14 @@
 import { createClient } from 'contentful-management'
 import { Environment, Space } from 'contentful-management/dist/typings/export-types'
 
-export const getSpace = (() => {
+let space: Space | undefined
+
+export const getSpace = async (): Promise<Space> => {
+
+    if (space) {
+        return space
+    }
+
     const { CONTENT_MANAGEMENT_TOKEN, SPACE_ID } = process.env
 
     if (!CONTENT_MANAGEMENT_TOKEN) {
@@ -16,10 +23,8 @@ export const getSpace = (() => {
         accessToken: CONTENT_MANAGEMENT_TOKEN
     })
 
-    const space = client.getSpace(SPACE_ID)
-
-    return (): Promise<Space> => space
-})()
+    return space = await client.getSpace(SPACE_ID)
+}
 
 export const resolveEnvironment = async (environment: Environment | string): Promise<Environment> => {
     const space = await getSpace()

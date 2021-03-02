@@ -4,5 +4,7 @@ export const padLeft = (value: number, length: number = value.toString().length,
 
 export const getStringDate = () => {
     const d = new Date(Date.now());
-    return `${d.toISOString().substring(0, 10).replace('-', '.')}-${padLeft(d.getUTCHours(), 2)}.${padLeft(d.getUTCMinutes(), 2)}.${padLeft(d.getUTCSeconds(), 2)}`
+    const date = d.toISOString().substring(0, 10).replace('-', '.')
+    const hours = `${padLeft(d.getUTCHours(), 2)}.${padLeft(d.getUTCMinutes(), 2)}.${padLeft(d.getUTCSeconds(), 2)}`
+    return `${date}-${hours}`
 }
