@@ -573,7 +573,7 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@26.x", "@types/jest@^26.0.20":
+"@types/jest@^26.0.20":
   version "26.0.20"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.20.tgz#cd2f2702ecf69e86b586e1f5223a60e454056307"
   integrity sha512-9zi2Y+5USJRxd0FsahERhBwlcvFh6D2GLQnY2FH2BzK8J9s9omvNHIbvABwIluXa0fD8XVKMLTO0aOEuUfACAA==
@@ -1411,10 +1411,10 @@ contentful-batch-libs@^9.0.1:
     lodash "^4.0.1"
     moment "^2.18.1"
 
-contentful-cli@^1.5.33:
-  version "1.5.33"
-  resolved "https://registry.yarnpkg.com/contentful-cli/-/contentful-cli-1.5.33.tgz#7b948cd243becac72772a3ad61c13bab0aeaf0ab"
-  integrity sha512-0yvP6vx3+IxJ6IzIgWYfMkYuNZKac7a4lOFuqr7GmtI8knLdrkoy34FpfMkNmYxpqgTupE3El1u/y2WmPvi+Ww==
+contentful-cli@^1.5.35:
+  version "1.5.35"
+  resolved "https://registry.yarnpkg.com/contentful-cli/-/contentful-cli-1.5.35.tgz#9481937a4c4ce9413a6e354228e73118dd24b457"
+  integrity sha512-l1fNjYuOAz/fcL1XbsG9b56VbvzbQCQumFM1pEXWtt9McWi615Uk00LfHUO/VBNjZbUm6hfxCg26C0aM7by3NQ==
   dependencies:
     ast-types "^0.14.2"
     bfj "^7.0.2"
@@ -1494,10 +1494,21 @@ contentful-import@^7.9.23:
     moment "^2.22.2"
     yargs "^16.0.3"
 
-contentful-management@^7.3.1, contentful-management@^7.8.0:
+contentful-management@^7.3.1:
   version "7.8.0"
   resolved "https://registry.yarnpkg.com/contentful-management/-/contentful-management-7.8.0.tgz#7e80417d99e954d32ab88452b5fc30acae2f713d"
   integrity sha512-7m9YmKlAmlo1IbzgAwi/sVtipLFKB8f32kmwGyB2/+E5EbPFcSlsptTcUrVg7y34EinggQiBUYVJO/6qZ6wlYw==
+  dependencies:
+    axios "^0.21.0"
+    contentful-sdk-core "^6.7.0"
+    fast-copy "^2.1.0"
+    lodash.isplainobject "^4.0.6"
+    type-fest "0.20.2"
+
+contentful-management@^7.9.0:
+  version "7.9.0"
+  resolved "https://registry.yarnpkg.com/contentful-management/-/contentful-management-7.9.0.tgz#161a55b91473332542abe3030d16f8bb0805edd4"
+  integrity sha512-9jXsX1QJrHFl2ao1j2pwHteW7vUe4/pus0Xm9GObMnyASeG1g9d/VCP6b4FoPek0Y8uEe1YjLGYxzM3YJha1kg==
   dependencies:
     axios "^0.21.0"
     contentful-sdk-core "^6.7.0"
@@ -5109,12 +5120,11 @@ tryer@^1.0.0, tryer@^1.0.1:
   resolved "https://registry.yarnpkg.com/tryer/-/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
   integrity sha512-c3zayb8/kWWpycWYg87P71E1S1ZL6b6IJxfb5fvsUgsf0S2MVGaDhDXXjDMpdCpfWXqptc+4mXwmiy1ypXqRAA==
 
-ts-jest@^26.5.2:
-  version "26.5.2"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-26.5.2.tgz#5281d6b44c2f94f71205728a389edc3d7995b0c4"
-  integrity sha512-bwyJ2zJieSugf7RB+o8fgkMeoMVMM2KPDE0UklRLuACxjwJsOrZNo6chrcScmK33YavPSwhARffy8dZx5LJdUQ==
+ts-jest@^26.5.3:
+  version "26.5.3"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-26.5.3.tgz#a6ee00ba547be3b09877550df40a1465d0295554"
+  integrity sha512-nBiiFGNvtujdLryU7MiMQh1iPmnZ/QvOskBbD2kURiI1MwqvxlxNnaAB/z9TbslMqCsSbu5BXvSSQPc5tvHGeA==
   dependencies:
-    "@types/jest" "26.x"
     bs-logger "0.x"
     buffer-from "1.x"
     fast-json-stable-stringify "2.x"
