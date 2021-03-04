@@ -1,0 +1,29 @@
+name: Integration
+
+on: ["push", "pull_request"]
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node: [14.x]
+
+    steps:
+    - name: Checkout 🛎️
+      uses: actions/checkout@v2
+
+    - name: Node 🧰
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node }}
+
+    - name: Install 📦
+      run: yarn --frozen-lockfile
+
+    - name: Test 🐛
+      run: yarn test:integration
+      env:
+        CONTENT_MANAGEMENT_TOKEN: ${{ secrets.CONTENT_MANAGEMENT_TOKEN }}
+        SPACE_ID: ${{ secrets.SPACE_ID }}
