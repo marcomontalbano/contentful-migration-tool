@@ -1,3 +1,4 @@
+import pEachSeries from 'p-each-series'
 import { Environment } from 'contentful-management/dist/typings/export-types';
 import { RunMigrationConfig, runMigration as contentfulRunMigration } from 'contentful-migration';
 import { existsSync, readdirSync } from 'fs';
@@ -52,10 +53,12 @@ export const run = async (environment: Environment): Promise<boolean> => {
         return false
     }
 
-    const migrations: Promise<any>[] = migrationList.map(migration => runMigration({ filePath: migration.filePath, environmentId: environment.sys.id }) )
+    const keywords: RunMigrationConfig[] = migrationList.map(migration => ({
+        filePath: migration.filePath,
+        environmentId: environment.sys.id
+    }))
 
-    await Promise.all(migrations)
-
+    await pEachSeries(keywords, runMigration)
 
     const { version } = migrationList.pop() as MigrationFile
 
