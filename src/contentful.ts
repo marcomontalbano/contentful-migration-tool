@@ -26,14 +26,11 @@ export const getSpace = async (): Promise<Space> => {
     return space = await client.getSpace(SPACE_ID)
 }
 
-export const resolveEnvironment = async (environment: Environment | string): Promise<Environment> => {
+export const hasEnvironment = async (environmentId: string): Promise<Environment | undefined> => {
     const space = await getSpace()
+    const environments = await space.getEnvironments()
 
-    if (typeof environment === 'string') {
-        environment = await space.getEnvironment(environment)
-    }
-
-    return environment
+    return environments.items.find(environment => environment.sys.id === environmentId)
 }
 
 export const hasContentType = (environment: Environment, contentTypeId: string): Promise<boolean> => {
@@ -44,9 +41,7 @@ export const hasContentType = (environment: Environment, contentTypeId: string):
     })
 }
 
-export const getDefaultLocale = async (environment: Environment | string): Promise<string> => {
-    environment = await resolveEnvironment(environment)
-
+export const getDefaultLocale = async (environment: Environment): Promise<string> => {
     const defaultLocale = (await environment.getLocales()).items.find(locale => locale.default)?.code;
 
     if (!defaultLocale) {

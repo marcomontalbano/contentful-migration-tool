@@ -1,5 +1,5 @@
 import { ContentType, Entry, Environment } from 'contentful-management/dist/typings/export-types'
-import { getDefaultLocale, hasContentType, resolveEnvironment } from './contentful';
+import { getDefaultLocale, hasContentType } from './contentful';
 
 const contentTypeId = 'versionTracking';
 
@@ -16,9 +16,7 @@ const createContentType = async (environment: Environment): Promise<ContentType>
     return contentType.publish()
 }
 
-export const setup = async (environment: Environment | string): Promise<boolean> => {
-    environment = await resolveEnvironment(environment)
-
+export const setup = async (environment: Environment): Promise<boolean> => {
     const defaultLocale = await getDefaultLocale(environment)
 
     if (!await hasContentType(environment, contentTypeId)) {
@@ -36,9 +34,7 @@ export const setup = async (environment: Environment | string): Promise<boolean>
     return true;
 }
 
-const getVersionEntry = async (environment: Environment | string): Promise<Entry> => {
-    environment = await resolveEnvironment(environment)
-
+const getVersionEntry = async (environment: Environment): Promise<Entry> => {
     const [ versionEntry ] = (await environment.getEntries({ content_type: contentTypeId, limit: 1 })).items
 
     if (!versionEntry) {
@@ -48,7 +44,7 @@ const getVersionEntry = async (environment: Environment | string): Promise<Entry
     return versionEntry
 }
 
-export const getVersion = async (environment: Environment | string): Promise<number> => {
+export const getVersion = async (environment: Environment): Promise<number> => {
     const versionEntry = await getVersionEntry(environment)
 
     const defaultLocale = await getDefaultLocale(environment)
@@ -56,7 +52,7 @@ export const getVersion = async (environment: Environment | string): Promise<num
     return parseInt(versionEntry.fields.version[ defaultLocale ])
 }
 
-export const updateVersion = async (environment: Environment | string, newVersion: number)  => {
+export const updateVersion = async (environment: Environment, newVersion: number)  => {
     const versionEntry = await getVersionEntry(environment)
 
     const defaultLocale = await getDefaultLocale(environment)

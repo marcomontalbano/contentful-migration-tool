@@ -1,15 +1,21 @@
 import { run } from './src/migration'
 import { setup } from './src/versioning'
 
-(async function() {
-    const { ENVIRONMENT } = process.env;
+import { createEnvironment } from "./src/environment";
 
-    if (ENVIRONMENT === undefined) {
-        throw new Error('The environment variable "ENVIRONMENT" is missing')
+(async function() {
+
+    const { ENVIRONMENT_ID } = process.env;
+
+    if (ENVIRONMENT_ID === undefined) {
+        throw new Error('The environment variable "ENVIRONMENT_ID" is missing')
     }
 
-    await setup(ENVIRONMENT)
-    await run(ENVIRONMENT)
+    createEnvironment(ENVIRONMENT_ID).then(async (env) => {
+        await setup(env)
+        await run(env)
+    })
+
 }()).catch((error) => {
     console.error(error)
 })

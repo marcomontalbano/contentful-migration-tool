@@ -12,7 +12,7 @@ type MigrationFile = {
     filePath: string
 }
 
-const getMigrationList = async (environment: Environment | string): Promise<MigrationFile[]> => {
+const getMigrationList = async (environment: Environment): Promise<MigrationFile[]> => {
     const currentVersion = await getVersion(environment)
 
     const migrationFolder = resolve(__dirname, '..', 'migrations')
@@ -41,19 +41,18 @@ const getMigrationList = async (environment: Environment | string): Promise<Migr
 const runMigration: RunMigration = ({
     accessToken = process.env.CONTENT_MANAGEMENT_TOKEN,
     spaceId = process.env.SPACE_ID,
-    environmentId = process.env.ENVIRONMENT,
     yes = true,
     ...options
-}) => contentfulRunMigration({ ...options, accessToken, spaceId, environmentId, yes })
+}) => contentfulRunMigration({ ...options, accessToken, spaceId, yes })
 
-export const run = async (environment: Environment | string): Promise<boolean> => {
+export const run = async (environment: Environment): Promise<boolean> => {
     const migrationList = await getMigrationList(environment)
 
     if (migrationList.length <= 0) {
         return false
     }
 
-    const migrations: Promise<any>[] = migrationList.map(migration => runMigration({ filePath: migration.filePath }) )
+    const migrations: Promise<any>[] = migrationList.map(migration => runMigration({ filePath: migration.filePath, environmentId: environment.sys.id }) )
 
     await Promise.all(migrations)
 

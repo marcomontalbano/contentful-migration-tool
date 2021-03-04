@@ -8,7 +8,7 @@
 # build
 docker build . -t contentful-migration
 
-docker run --rm -e CONTENT_MANAGEMENT_TOKEN=$CONTENT_MANAGEMENT_TOKEN -e SPACE_ID=$SPACE_ID -e ENVIRONMENT=$ENVIRONMENT -v $(pwd)/migrations:/app/migrations contentful-migration:latest
+docker run --rm -e CONTENT_MANAGEMENT_TOKEN=$CONTENT_MANAGEMENT_TOKEN -e SPACE_ID=$SPACE_ID -e ENVIRONMENT_ID=$ENVIRONMENT_ID -v $(pwd)/migrations:/app/migrations contentful-migration:latest
 ```
 
 ### Options
@@ -19,7 +19,7 @@ docker run --rm -e CONTENT_MANAGEMENT_TOKEN=$CONTENT_MANAGEMENT_TOKEN -e SPACE_I
 
 * **`SPACE_ID`** - ***required*** - Contentful Space ID. You can get the Space ID from the section *General settings* under your space settings. The Space ID is also visibile in the url.
 
-* **`ENVIRONMENT`** - ***required*** - Contentful Environment.
+* **`ENVIRONMENT_ID`** - ***required*** - Contentful Environment ID.
 
 #### Volumes
 
