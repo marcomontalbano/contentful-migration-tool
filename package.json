@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "jest",
+    "test:integration": "jest",
     "dev": "ts-node -r dotenv/config index.ts",
     "migrate": "ts-node index.ts"
   },
