@@ -1,5 +1,7 @@
 # Contentful Migration
 
+[![Test](https://github.com/marcomontalbano/contentful-migration/actions/workflows/test.yml/badge.svg)](https://github.com/marcomontalbano/contentful-migration/actions/workflows/test.yml)
+
 :warning:   Work In Progress!
 
 ## Usage
