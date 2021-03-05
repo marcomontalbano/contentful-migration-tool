@@ -13,13 +13,11 @@ type MigrationFile = {
     filePath: string
 }
 
-const getMigrationList = async (environment: Environment): Promise<MigrationFile[]> => {
+const getMigrationList = async (environment: Environment, migrationFolder: string): Promise<MigrationFile[]> => {
     const currentVersion = await getVersion(environment)
 
-    const migrationFolder = resolve(__dirname, '..', 'migrations')
-
     if (!existsSync(migrationFolder)) {
-        throw new Error('The "/migrations" folder is missing')
+        throw new Error('"migrations" folder is missing')
     }
 
     return readdirSync(migrationFolder)
@@ -46,8 +44,8 @@ const runMigration: RunMigration = ({
     ...options
 }) => contentfulRunMigration({ ...options, accessToken, spaceId, yes })
 
-export const run = async (environment: Environment): Promise<boolean> => {
-    const migrationList = await getMigrationList(environment)
+export const run = async (environment: Environment, migrationFolder: string): Promise<boolean> => {
+    const migrationList = await getMigrationList(environment, migrationFolder)
 
     if (migrationList.length <= 0) {
         return false

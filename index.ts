@@ -2,6 +2,7 @@ import { run } from './src/migration'
 import { setup } from './src/versioning'
 
 import { getEnvironment } from './src/contentful';
+import { resolve } from 'path';
 
 (async function() {
 
@@ -18,7 +19,7 @@ import { getEnvironment } from './src/contentful';
     }
 
     await setup(environment)
-    await run(environment)
+    await run(environment, resolve(__dirname, 'migrations'))
 
 }()).catch((error) => {
     console.error(error)

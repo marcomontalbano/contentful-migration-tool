@@ -23,7 +23,7 @@ docker run --rm -e CONTENT_MANAGEMENT_TOKEN=$CONTENT_MANAGEMENT_TOKEN -e SPACE_I
 
 #### Volumes
 
-* **`/migrations`** - ***required*** - Migrations folder.
+* **`/app/migrations`** - ***required*** - Migrations folder.
 
 
 ### Migrations

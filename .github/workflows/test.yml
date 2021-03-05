@@ -1,9 +1,9 @@
-name: Integration
+name: Test
 
 on: ["push", "pull_request"]
 
 jobs:
-  integration:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
