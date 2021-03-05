@@ -1,13 +1,12 @@
 # Contentful Migration
 
 [![Test](https://github.com/marcomontalbano/contentful-migration/actions/workflows/test.yml/badge.svg)](https://github.com/marcomontalbano/contentful-migration/actions/workflows/test.yml)
-
-:warning:   Work In Progress!
+[![Docker](https://img.shields.io/docker/v/marcomontalbano/contentful-migration.svg?style=plastic&logo=docker&logoColor=white&style=flat)](https://hub.docker.com/r/marcomontalbano/contentful-migration)
 
 ## Usage
 
 ```sh
-docker run --rm --name contentful-migration-runner -e CONTENT_MANAGEMENT_TOKEN=$CONTENT_MANAGEMENT_TOKEN -e SPACE_ID=$SPACE_ID -e ENVIRONMENT_ID=$ENVIRONMENT_ID -v $(pwd)/migrations:/app/migrations contentful-migration:latest
+docker run --rm --name contentful-migration-runner -e CONTENT_MANAGEMENT_TOKEN=$CONTENT_MANAGEMENT_TOKEN -e SPACE_ID=$SPACE_ID -e ENVIRONMENT_ID=$ENVIRONMENT_ID -v $(pwd)/migrations:/app/migrations marcomontalbano/contentful-migration
 ```
 
 ### Options

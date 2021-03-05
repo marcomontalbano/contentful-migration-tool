@@ -20,7 +20,7 @@ describe('Contentful Migration', () => {
     let environmentId: string
 
     beforeEach(async () => {
-        environmentId = `test-${ Date.now() }`
+        environmentId = `test-${ Date.now() }-${ Math.random() }`
         environment = await createEnvironment(environmentId)
     })
 
