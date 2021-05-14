@@ -1,26 +1,56 @@
-import { run } from './src/migration'
-import { setup } from './src/versioning'
+import yargs from 'yargs'
+import { execSync } from 'child_process'
+import { exit } from 'process';
 
-import { getEnvironment } from './src/contentful';
-import { resolve } from 'path';
+const argv = yargs
+  .option('cfmversion', {
+    description: 'Contentful Migration library version',
+    default: 'latest',
+    type: 'string',
+  })
+  .help().alias('help', 'h')
+  .argv;
 
-(async function() {
+function installDependency(version: string = 'latest'): void {
+  execSync(`yarn add contentful-migration@${ version }`, {
+    encoding: 'utf-8',
+    stdio: 'ignore'
+  })
+}
 
-    const { ENVIRONMENT_ID } = process.env;
+function removeDependency(): void {
+  try {
+    execSync(`yarn remove contentful-migration`, {
+      encoding: 'utf-8',
+      stdio: 'ignore'
+    })
+  } catch {
+    console.info('  nothing to remove')
+  }
+}
 
-    if (ENVIRONMENT_ID === undefined) {
-        throw new Error('The environment variable "ENVIRONMENT_ID" is missing')
-    }
+function runMigration(): void {
+  execSync(`ts-node runner.ts`, {
+    encoding: 'utf-8',
+    stdio: 'inherit'
+  })
+}
 
-    const environment = await getEnvironment(ENVIRONMENT_ID)
+((async function () {
 
-    if (environment === undefined) {
-        throw new Error(`Environment ${ENVIRONMENT_ID} not found`)
-    }
+  console.info(`- Remove contentful-migration`)
+  removeDependency()
 
-    await setup(environment)
-    await run(environment, resolve(__dirname, 'migrations'))
+  console.info(`- Install contentful-migration@${ argv.cfmversion }`)
+  installDependency(argv.cfmversion)
 
-}()).catch((error) => {
-    console.error(error)
+  console.info(`- Run migration`)
+  runMigration()
+
+  console.info(`- Cleanup contentful-migration`)
+  removeDependency()
+
+})()).catch((error) => {
+  console.error(error)
+  exit(1)
 })
