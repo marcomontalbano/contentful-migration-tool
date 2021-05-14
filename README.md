@@ -1,6 +1,6 @@
-# Contentful Migration
+# Contentful Migration CLI
 
-[![Test](https://github.com/marcomontalbano/dockerized-contentful-migration/actions/workflows/test.yml/badge.svg)](https://github.com/marcomontalbano/dockerized-contentful-migration/actions/workflows/test.yml)
+[![Test](https://github.com/marcomontalbano/contentful-migration-cli/actions/workflows/test.yml/badge.svg)](https://github.com/marcomontalbano/contentful-migration-cli/actions/workflows/test.yml)
 [![Docker](https://img.shields.io/docker/v/marcomontalbano/contentful-migration.svg?style=plastic&logo=docker&logoColor=white&style=flat)](https://hub.docker.com/r/marcomontalbano/contentful-migration)
 
 Run Contentful migrations easier with a Docker image.

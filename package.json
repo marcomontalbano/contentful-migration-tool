@@ -1,7 +1,7 @@
 {
-  "name": "dockerized-contentful-migration",
+  "name": "contentful-migration-cli",
   "version": "1.0.0-beta.0",
-  "description": "",
+  "description": "Run Contentful migrations easier with a Docker image.",
   "main": "index.ts",
   "scripts": {
     "pretest:integration": "yarn add --dev contentful-migration",
