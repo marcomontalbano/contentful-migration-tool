@@ -1,11 +1,16 @@
-import pEachSeries from 'p-each-series'
+import { pEachSeries } from './utils'
 import { Environment } from 'contentful-management/dist/typings/export-types';
 import { RunMigrationConfig, runMigration as contentfulRunMigration } from 'contentful-migration';
 import { existsSync, readdirSync } from 'fs';
 import { resolve } from 'path';
 import { getVersion, updateVersion } from './versioning';
 
-type RunMigration = (options: RunMigrationConfig) => Promise<any>
+type RunMigrationOptions = {
+    migration: MigrationFile
+    config: RunMigrationConfig
+}
+
+type RunMigration = (options: RunMigrationOptions) => Promise<any>
 
 type MigrationFile = {
     version: number
@@ -40,12 +45,7 @@ const getMigrationList = async (environment: Environment, migrationFolder: strin
         .filter(migration => migration.version > currentVersion)
 }
 
-const runMigration: RunMigration = ({
-    accessToken = process.env.CONTENT_MANAGEMENT_TOKEN,
-    spaceId = process.env.SPACE_ID,
-    yes = true,
-    ...options
-}) => contentfulRunMigration({ ...options, accessToken, spaceId, yes })
+const runMigration: RunMigration = ({ config }) => contentfulRunMigration({ ...config })
 
 export const run = async (environment: Environment, migrationFolder: string): Promise<boolean> => {
     const migrationList = await getMigrationList(environment, migrationFolder)
@@ -54,16 +54,28 @@ export const run = async (environment: Environment, migrationFolder: string): Pr
         return false
     }
 
-    const keywords: RunMigrationConfig[] = migrationList.map(migration => ({
-        filePath: migration.filePath,
-        environmentId: environment.sys.id
+    const iterable: RunMigrationOptions[] = migrationList.map(migration => ({
+        migration,
+        config: {
+            filePath: migration.filePath,
+            environmentId: environment.sys.id,
+            accessToken: process.env.CONTENT_MANAGEMENT_TOKEN,
+            spaceId: process.env.SPACE_ID,
+            yes: true,
+        }
     }))
 
-    await pEachSeries(keywords, runMigration)
+    const result = await pEachSeries(iterable, runMigration)
 
-    const { version } = migrationList.pop() as MigrationFile
+    const { migration: { version = undefined } = {} } = result.iterable.pop() || {}
 
-    await updateVersion(environment, version)
+    if (version !== undefined) {
+        await updateVersion(environment, version)
+    }
+
+    if (result.error) {
+        throw result.error
+    }
 
     return true
 }
