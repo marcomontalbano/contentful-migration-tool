@@ -20,7 +20,10 @@ const getMigrationList = async (environment: Environment, migrationFolder: strin
         throw new Error('"migrations" folder is missing')
     }
 
+    const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
     return readdirSync(migrationFolder)
+        .sort(collator.compare)
         .reduce((accumulator, filename) => {
             const groups = filename.match(/^(?<version>\d+)-(?<name>.*)\.[ts|js]+$/)?.groups
             const { version, name } = groups || {}
