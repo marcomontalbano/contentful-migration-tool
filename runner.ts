@@ -23,4 +23,5 @@ import { resolve } from 'path';
 
 }()).catch((error) => {
     console.error(error)
+    process.exit(1)
 })

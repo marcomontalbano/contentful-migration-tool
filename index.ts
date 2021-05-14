@@ -1,6 +1,5 @@
 import yargs from 'yargs'
 import { execSync } from 'child_process'
-import { exit } from 'process';
 
 const argv = yargs
   .option('cfmversion', {
@@ -52,5 +51,5 @@ function runMigration(): void {
 
 })()).catch((error) => {
   console.error(error)
-  exit(1)
+  process.exit(1)
 })
