@@ -1,6 +1,6 @@
 {
   "name": "contentful-migration-cli",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "Run Contentful migrations easier with a Docker image.",
   "main": "index.ts",
   "scripts": {
