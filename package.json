@@ -2,24 +2,39 @@
   "name": "contentful-migration-tool",
   "version": "1.0.0-beta.1",
   "description": "Run Contentful migrations easier.",
-  "main": "index.ts",
+  "main": "dist/src/migration.js",
+  "types": "dist/src/migration.d.ts",
   "bin": "./bin/index.js",
+  "files": [
+    "/bin",
+    "/dist"
+  ],
   "scripts": {
+    "lint": "tsc --noEmit",
+    "pretest:integration": "yarn lint",
     "test:integration": "node -r dotenv/config ./node_modules/.bin/jest",
     "dev": "ts-node -r dotenv/config runner.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublishOnly": "yarn build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marcomontalbano/contentful-migration.git"
+    "url": "git+https://github.com/marcomontalbano/contentful-migration-tool.git"
   },
-  "keywords": [],
+  "keywords": [
+    "docker",
+    "cli",
+    "contentful",
+    "migration",
+    "migrate",
+    "contentful-migration"
+  ],
   "author": "Marco Montalbano <me@marcomontalbano.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/marcomontalbano/contentful-migration/issues"
+    "url": "https://github.com/marcomontalbano/contentful-migration-tool/issues"
   },
-  "homepage": "https://github.com/marcomontalbano/contentful-migration#readme",
+  "homepage": "https://github.com/marcomontalbano/contentful-migration-tool#readme",
   "engines": {
     "node": ">=14"
   },

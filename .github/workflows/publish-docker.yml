@@ -5,12 +5,14 @@ on:
     types: [published]
 
 jobs:
-  push_to_registry:
+  publish:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
+
       - name: Push to Docker Hub 🐳
         uses: docker/build-push-action@v1
         with:
