@@ -20,7 +20,9 @@ jobs:
         node-version: ${{ matrix.node }}
 
     - name: Install 📦
-      run: yarn --frozen-lockfile
+      run: |
+        yarn --frozen-lockfile
+        yarn add --dev contentful-migration
 
     - name: Test 🐛
       run: yarn test:integration

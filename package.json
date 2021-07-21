@@ -1,14 +1,13 @@
 {
-  "name": "contentful-migration-cli",
+  "name": "contentful-migration-tool",
   "version": "1.0.0-beta.1",
-  "description": "Run Contentful migrations easier with a Docker image.",
+  "description": "Run Contentful migrations easier.",
   "main": "index.ts",
+  "bin": "./bin/index.js",
   "scripts": {
-    "pretest:integration": "yarn add --dev contentful-migration",
     "test:integration": "node -r dotenv/config ./node_modules/.bin/jest",
-    "dev": "ts-node -r dotenv/config index.ts",
-    "postdev": "yarn add --dev contentful-migration",
-    "migrate": "ts-node index.ts"
+    "dev": "ts-node -r dotenv/config runner.ts",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -22,7 +21,7 @@
   },
   "homepage": "https://github.com/marcomontalbano/contentful-migration#readme",
   "engines": {
-    "node": ">=14 <15"
+    "node": ">=14"
   },
   "dependencies": {
     "@types/jest": "^26.0.23",
@@ -37,5 +36,8 @@
     "dotenv": "^9.0.2",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.6"
+  },
+  "peerDependencies": {
+    "contentful-migration": ">=4"
   }
 }

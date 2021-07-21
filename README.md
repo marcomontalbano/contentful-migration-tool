@@ -1,11 +1,11 @@
-# Contentful Migration CLI
+# Contentful Migration Tool
 
-[![Test](https://github.com/marcomontalbano/contentful-migration-cli/actions/workflows/test.yml/badge.svg)](https://github.com/marcomontalbano/contentful-migration-cli/actions/workflows/test.yml)
+[![Test](https://github.com/marcomontalbano/contentful-migration-tool/actions/workflows/test.yml/badge.svg)](https://github.com/marcomontalbano/contentful-migration-tool/actions/workflows/test.yml)
 [![Docker](https://img.shields.io/docker/v/marcomontalbano/contentful-migration.svg?style=plastic&logo=docker&logoColor=white&style=flat)](https://hub.docker.com/r/marcomontalbano/contentful-migration)
 
-Run Contentful migrations easier with a Docker image.
+Run Contentful migrations easier.
 
-## Usage
+## Docker usage
 
 ```sh
 docker run --rm --name contentful-migration-runner -e CONTENT_MANAGEMENT_TOKEN=$CONTENT_MANAGEMENT_TOKEN -e SPACE_ID=$SPACE_ID -e ENVIRONMENT_ID=$ENVIRONMENT_ID -v $(pwd)/migrations:/app/migrations marcomontalbano/contentful-migration
@@ -25,10 +25,29 @@ docker run --rm --name contentful-migration-runner -e CONTENT_MANAGEMENT_TOKEN=$
 
 * **`/app/migrations`** - ***required*** - Migrations folder.
 
+#### Arguments
 
-### Migrations
+* **`--cfmversion 4.0.0`** - ***optional*** - Use this argument if you want to change the `contentful-migration` version. (default to `latest`)
 
-You should create a `/migrations` folder in your root folder. This folder will contain all your migration description files.
+## CLI usage
+
+```sh
+npx contentful-migration-tool run ./migrations
+```
+
+### Options
+
+#### Environment Variables
+
+* **`CONTENT_MANAGEMENT_TOKEN`** - ***required*** - Contentful Content Management Token. You can create one from the section *API keys* under your space settings.
+
+* **`SPACE_ID`** - ***required*** - Contentful Space ID. You can get the Space ID from the section *General settings* under your space settings. The Space ID is also visibile in the url.
+
+* **`ENVIRONMENT_ID`** - ***required*** - Contentful Environment ID.
+
+## Migrations folder
+
+Either you use **Docker** or **CLI**, you should create a `/migrations` folder in your root folder. This folder will contain all your migration description files.
 
 A migration description file is a `.js` or `.ts` file that contains a migration script.
 

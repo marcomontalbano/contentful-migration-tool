@@ -1,7 +1,7 @@
 import { Environment } from 'contentful-management/dist/typings/export-types'
 import { getEnvironment, getSpace, hasContentType, resolveWhenEnvironmentIsReady } from '../src/contentful'
 import { getVersion, setup, updateVersion } from '../src/versioning'
-import { run } from '../src/migration'
+import { ContentfulOptions, run } from '../src/migration'
 import { resolve } from 'path'
 
 jest.setTimeout(60 * 1000);
@@ -14,14 +14,30 @@ const createEnvironment = async (environmentId: string): Promise<Environment> =>
     return await resolveWhenEnvironmentIsReady(environment)
 }
 
+const { CONTENT_MANAGEMENT_TOKEN, SPACE_ID } = process.env
+
+if (CONTENT_MANAGEMENT_TOKEN === undefined) {
+    throw new Error('The environment variable "CONTENT_MANAGEMENT_TOKEN" is missing')
+}
+
+if (SPACE_ID === undefined) {
+    throw new Error('The environment variable "SPACE_ID" is missing')
+}
+
 describe('Contentful Migration', () => {
 
     let environment: Environment
     let environmentId: string
+    let contentfulOptions: ContentfulOptions
 
     beforeEach(async () => {
         environmentId = `test-${ Date.now() }-${ Math.random() }`
         environment = await createEnvironment(environmentId)
+        contentfulOptions = {
+            accessToken: CONTENT_MANAGEMENT_TOKEN,
+            spaceId: SPACE_ID,
+            environment
+        }
     })
 
     afterEach(async () => {
@@ -65,7 +81,7 @@ describe('Contentful Migration', () => {
             await setup(environment);
 
             expect(
-                await run(environment, resolve(__dirname, '..', '__mocks__', 'migrations', 'serially-ts'))
+                await run(contentfulOptions, resolve(__dirname, '..', '__mocks__', 'migrations', 'serially-ts'))
             ).toBeTruthy()
 
             expect(await hasContentType(environment, 'author')).toBeTruthy();
@@ -83,7 +99,7 @@ describe('Contentful Migration', () => {
             await setup(environment);
 
             expect(
-                await run(environment, resolve(__dirname, '..', '__mocks__', 'migrations', 'serially-js'))
+                await run(contentfulOptions, resolve(__dirname, '..', '__mocks__', 'migrations', 'serially-js'))
             ).toBeTruthy()
 
             expect(await hasContentType(environment, 'blog')).toBeTruthy();
@@ -101,7 +117,7 @@ describe('Contentful Migration', () => {
             await setup(environment);
 
             expect(
-                await run(environment, resolve(__dirname, '..', '__mocks__', 'migrations', 'empty-folder'))
+                await run(contentfulOptions, resolve(__dirname, '..', '__mocks__', 'migrations', 'empty-folder'))
             ).toBeFalsy()
         })
 
@@ -109,7 +125,7 @@ describe('Contentful Migration', () => {
             await setup(environment);
 
             return expect(
-                run(environment, resolve(__dirname, '..', '__mocks__', 'migrations', 'unexisting-folder'))
+                run(contentfulOptions, resolve(__dirname, '..', '__mocks__', 'migrations', 'unexisting-folder'))
             ).rejects.toThrowError('"migrations" folder is missing')
         })
     })

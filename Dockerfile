@@ -5,4 +5,4 @@ COPY yarn.lock .
 RUN yarn --production --frozen-lockfile
 COPY . .
 
-ENTRYPOINT ["yarn", "migrate"]
+ENTRYPOINT ["yarn", "ts-node", "docker.ts"]

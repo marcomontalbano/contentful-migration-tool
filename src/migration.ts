@@ -5,6 +5,12 @@ import { existsSync, readdirSync } from 'fs';
 import { resolve } from 'path';
 import { getVersion, updateVersion } from './versioning';
 
+export type ContentfulOptions = {
+    environment: Environment
+    accessToken: string
+    spaceId: string
+}
+
 type RunMigrationOptions = {
     migration: MigrationFile
     config: RunMigrationConfig
@@ -47,7 +53,7 @@ const getMigrationList = async (environment: Environment, migrationFolder: strin
 
 const runMigration: RunMigration = ({ config }) => contentfulRunMigration({ ...config })
 
-export const run = async (environment: Environment, migrationFolder: string): Promise<boolean> => {
+export const run = async ({ environment, accessToken, spaceId }: ContentfulOptions, migrationFolder: string): Promise<boolean> => {
     const migrationList = await getMigrationList(environment, migrationFolder)
 
     if (migrationList.length <= 0) {
@@ -59,9 +65,9 @@ export const run = async (environment: Environment, migrationFolder: string): Pr
         config: {
             filePath: migration.filePath,
             environmentId: environment.sys.id,
-            accessToken: process.env.CONTENT_MANAGEMENT_TOKEN,
-            spaceId: process.env.SPACE_ID,
             yes: true,
+            accessToken,
+            spaceId,
         }
     }))
 

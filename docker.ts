@@ -1,5 +1,6 @@
 import yargs from 'yargs'
 import { execSync } from 'child_process'
+import { resolve } from 'path';
 
 const argv = yargs
   .option('cfmversion', {
@@ -29,7 +30,7 @@ function removeDependency(): void {
 }
 
 function runMigration(): void {
-  execSync(`ts-node runner.ts`, {
+  execSync(`ts-node runner.ts run ${ resolve(__dirname, 'migrations') }`, {
     encoding: 'utf-8',
     stdio: 'inherit'
   })
