@@ -128,5 +128,21 @@ describe('Contentful Migration', () => {
                 run(contentfulOptions, resolve(__dirname, '..', '__mocks__', 'migrations', 'unexisting-folder'))
             ).rejects.toThrowError('"migrations" folder is missing')
         })
+
+        it('should throw an error if there are duplicate version numbers', async () => {
+            await setup(environment);
+
+            return expect(
+                run(contentfulOptions, resolve(__dirname, '..', '__mocks__', 'migrations', 'duplicate-version-numbers'))
+            ).rejects.toThrowError('Found duplicated version numbers: "2"')
+        })
+
+        it('should throw an error if there are missing version numbers between one version and the next one', async () => {
+            await setup(environment);
+
+            return expect(
+                run(contentfulOptions, resolve(__dirname, '..', '__mocks__', 'migrations', 'missing-version-numbers'))
+            ).rejects.toThrowError('Found missing version numbers: "3", "5"')
+        })
     })
 })

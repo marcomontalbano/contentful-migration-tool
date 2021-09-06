@@ -1,13 +1,13 @@
 import { MigrationFunction } from 'contentful-migration'
 
 const migrate: MigrationFunction = (migration) => {
-  const author = migration.createContentType('author', {
-    name: 'Author',
-    displayField: 'name'
+  const message = migration.createContentType('message', {
+    name: 'Message',
+    displayField: 'text'
   })
 
-  author.createField('name', {
-    name: 'Name',
+  message.createField('text', {
+    name: 'Text',
     type: 'Symbol',
     required: true
   })

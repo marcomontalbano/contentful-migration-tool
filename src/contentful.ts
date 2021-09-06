@@ -70,7 +70,7 @@ export const getDefaultLocale = async (environment: Environment): Promise<string
     const defaultLocale = (await environment.getLocales()).items.find(locale => locale.default)?.code;
 
     if (!defaultLocale) {
-        throw new Error('default locale is not set!');
+        throw new Error('Default locale is not set!');
     }
 
     return defaultLocale
