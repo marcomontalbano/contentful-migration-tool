@@ -12,22 +12,21 @@ export type ContentfulOptions = {
 }
 
 type RunMigrationOptions = {
-    migration: MigrationFile
+    migration: MigrationItem
     config: RunMigrationConfig
 }
 
 type RunMigration = (options: RunMigrationOptions) => Promise<any>
 
-type MigrationFile = {
+type MigrationItem = {
     version: number
     name: string
     filePath: string
 }
 
-const getMigrationList = async (environment: Environment, migrationFolder: string): Promise<MigrationFile[]> => {
-    const currentVersion = await getVersion(environment)
+const getMigrationItems = async (migrationFolder: string): Promise<MigrationItem[]> => {
 
-    if (!existsSync(migrationFolder)) {
+    if (!existsSync(migrationFolder)) {
         throw new Error('"migrations" folder is missing')
     }
 
@@ -47,12 +46,11 @@ const getMigrationList = async (environment: Environment, migrationFolder: strin
                 ...accumulator,
                 { version: parseInt(version), name, filePath: resolve(migrationFolder, filename) }
             ]
-        }, [] as MigrationFile[])
-        .filter(migration => migration.version > currentVersion)
+        }, [] as MigrationItem[])
 }
 
-const throwWhenErrors = (migrationFiles: MigrationFile[]): void => {
-    const versions = migrationFiles.map(migrationFile => migrationFile.version)
+const throwWhenErrors = (migrationItems: MigrationItem[]): void => {
+    const versions = migrationItems.map(migrationFile => migrationFile.version)
 
     const duplicates = versions.filter((version, index, array) => array.indexOf(version) !== index)
 
@@ -60,7 +58,7 @@ const throwWhenErrors = (migrationFiles: MigrationFile[]): void => {
         throw new Error(`Found duplicated version numbers: ${duplicates.map(v => `"${v}"`).join(', ')}`)
     }
 
-    const missings = Array.from({ length: Math.max(...versions) }, (_, x) => !versions.includes(x + 1) ? x + 1 : false).filter(Boolean)
+    const missings = Array.from({ length: Math.max(...versions) }, (_, i) => !versions.includes(i + 1) ? i + 1 : false).filter(Boolean)
 
     if (missings.length > 0) {
         throw new Error(`Found missing version numbers: ${missings.map(v => `"${v}"`).join(', ')}`)
@@ -70,15 +68,18 @@ const throwWhenErrors = (migrationFiles: MigrationFile[]): void => {
 const runMigration: RunMigration = ({ config }) => contentfulRunMigration({ ...config })
 
 export const run = async ({ environment, accessToken, spaceId }: ContentfulOptions, migrationFolder: string): Promise<boolean> => {
-    const migrationList = await getMigrationList(environment, migrationFolder)
+    const migrationItems = await getMigrationItems(migrationFolder)
 
-    if (migrationList.length <= 0) {
+    throwWhenErrors(migrationItems)
+
+    const currentVersion = await getVersion(environment)
+    const newestMigrationItems = migrationItems.filter(migration => migration.version > currentVersion)
+
+    if (newestMigrationItems.length <= 0) {
         return false
     }
 
-    throwWhenErrors(migrationList)
-
-    const iterable: RunMigrationOptions[] = migrationList.map(migration => ({
+    const iterable: RunMigrationOptions[] = newestMigrationItems.map(migration => ({
         migration,
         config: {
             filePath: migration.filePath,

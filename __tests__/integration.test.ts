@@ -139,6 +139,7 @@ describe('Contentful Migration', () => {
 
         it('should throw an error if there are missing version numbers between one version and the next one', async () => {
             await setup(environment);
+            await updateVersion(environment, 4);
 
             return expect(
                 run(contentfulOptions, resolve(__dirname, '..', '__mocks__', 'migrations', 'missing-version-numbers'))
