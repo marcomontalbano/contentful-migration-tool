@@ -15,3 +15,5 @@ node_modules
 CONTRIBUTING.md
 Dockerfile*
 jest.config.js
+*.iml
+.idea
