@@ -31,7 +31,7 @@ describe('Contentful Migration', () => {
     let contentfulOptions: ContentfulOptions
 
     beforeEach(async () => {
-        environmentId = `test-${ Date.now() }-${ Math.random() }`
+        environmentId = `test-${ Date.now() }-${ Math.random() }`.substring(0, 40)
         environment = await createEnvironment(environmentId)
         contentfulOptions = {
             accessToken: CONTENT_MANAGEMENT_TOKEN,
