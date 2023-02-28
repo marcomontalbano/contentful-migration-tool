@@ -35,13 +35,13 @@ env $(xargs < .env) pnpm ts-node ./bin/index.js run ./migrations
 
 ```sh
 # Creates a new version by incrementing the major, minor, or patch number of the current version.
-pnpm version [--major | --minor | --patch]
+pnpm version [major | minor | patch]
 
 # Creates a new prerelease version by incrementing the major, minor, or patch number of the current version and adding a prerelease number.
-pnpm version --preid beta [--premajor | --preminor | --prepatch]
+pnpm version --preid beta [premajor | preminor | prepatch]
 
 # Increments the prerelease version number keeping the main version.
-pnpm version --prerelease
+pnpm version prerelease
 
 # Push branch and tags
 git push origin main --follow-tags
