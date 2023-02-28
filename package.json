@@ -11,10 +11,12 @@
   ],
   "scripts": {
     "lint": "tsc --noEmit",
-    "pretest:integration": "yarn lint",
-    "test:integration": "node -r dotenv/config ./node_modules/.bin/jest",
+    "pretest:integration": "pnpm lint",
+    "test:integration": "jest",
     "build": "tsc",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "pnpm build",
+    "dep:upgrade:major": "pnpx npm-check-updates -u",
+    "dep:upgrade:minor": "pnpm dep:upgrade:major -t minor"
   },
   "repository": {
     "type": "git",
@@ -38,18 +40,20 @@
     "node": ">=14"
   },
   "dependencies": {
-    "contentful-management": "^7.44.2",
-    "yargs": "^17.2.1"
+    "@types/yargs": "^17.0.22",
+    "chalk": "^4.1.2",
+    "contentful-management": "^7.54.2",
+    "yargs": "^17.7.1"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.2",
-    "@types/node": "14.17.3",
-    "contentful-migration": "^4.5.9",
+    "@types/jest": "^27.5.2",
+    "@types/node": "18.14.2",
+    "contentful-migration": "^4.12.9",
     "dotenv": "^10.0.0",
-    "jest": "^27.3.1",
-    "ts-jest": "^27.0.7",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.4.4"
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "contentful-migration": ">=4"

@@ -1,36 +1,44 @@
-import yargs from 'yargs'
 import { execSync } from 'child_process'
-import { resolve } from 'path';
+import { resolve } from 'path'
+import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
+import chalk from 'chalk'
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
   .option('cfmversion', {
     description: 'Contentful Migration library version',
     default: 'latest',
     type: 'string',
   })
   .help().alias('help', 'h')
-  .argv;
+  .parseSync();
 
 function installDependency(version: string = 'latest'): void {
-  execSync(`yarn add contentful-migration@${version}`, {
+  execSync(`pnpm add contentful-migration@${ version }`, {
     encoding: 'utf-8',
     stdio: 'ignore'
   })
 
-  execSync(`yarn list --pattern contentful-migration --depth=0 --non-interactive --no-progress`, {
+  const cfmInstalledVersion = execSync(`pnpm ls contentful-migration --depth -1`, {
     encoding: 'utf-8',
-    stdio: 'inherit'
+    stdio: 'pipe'
   })
+
+  console.log(
+    chalk.green(
+      `✔ ${cfmInstalledVersion.split('\n').splice(3, 1).join('') }`
+    ), '\n'
+  )
 }
 
 function removeDependency(): void {
   try {
-    execSync(`yarn remove contentful-migration`, {
+    execSync(`pnpm remove contentful-migration`, {
       encoding: 'utf-8',
       stdio: 'ignore'
     })
   } catch {
-    console.info('  nothing to remove')
+    // console.info(chalk.blueBright('  nothing to remove'))
   }
 }
 
@@ -41,21 +49,26 @@ function runMigration(): void {
   })
 }
 
+function title(text: string): string {
+  const spaces = Array(text.length + 4).fill(' ').join('')
+  return chalk.black.bgCyanBright(`\n${spaces}\n  ${text}  \n${spaces}`)
+}
+
 ((async function () {
 
-  console.info(`- Remove contentful-migration`)
+  console.info(title(`Install contentful-migration@${ argv.cfmversion }`), '\n')
   removeDependency()
-
-  console.info(`- Install contentful-migration@${ argv.cfmversion }`)
   installDependency(argv.cfmversion)
 
-  console.info(`- Run migration`)
+  console.info(title(`Run migration`), '\n')
   runMigration()
 
-  console.info(`- Cleanup contentful-migration`)
-  removeDependency()
+  // console.info(title(`Cleanup contentful-migration\n`))
+  // removeDependency()
+
+  console.info('')
 
 })()).catch((error) => {
-  console.error(error)
+  console.error(chalk.redBright(error))
   process.exit(1)
 })

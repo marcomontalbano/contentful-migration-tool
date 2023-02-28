@@ -1,20 +1,12 @@
 import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 
 import { run } from './src/migration'
 import { setup } from './src/versioning'
 
-import { getEnvironment } from './src/contentful';
+import { getEnvironment } from './src/contentful'
 
-type RunArgv = {
-  /** Non-option arguments */
-  _: Array<string | number>;
-  /** The script name or node command */
-  $0: string;
-} & {
-  folder: string
-}
-
-const runCommand = (argv: RunArgv) => (async function () {
+const runCommand = (argv: yargs.ArgumentsCamelCase<{ folder: string }>) => (async function () {
 
   const { CONTENT_MANAGEMENT_TOKEN, SPACE_ID, ENVIRONMENT_ID } = process.env;
 
@@ -37,18 +29,22 @@ const runCommand = (argv: RunArgv) => (async function () {
   }
 
   await setup(environment)
-  await run({
+  const result = await run({
     accessToken: CONTENT_MANAGEMENT_TOKEN,
     spaceId: SPACE_ID,
     environment,
   }, argv.folder)
+
+  if (result === false) {
+    console.info(`There are no new migrations!`)
+  }
 
 }()).catch((error) => {
   console.error(error)
   process.exit(1)
 })
 
-yargs
+yargs(hideBin(process.argv))
   .command('run <folder>', 'Run migrations', (yargs) => {
     yargs.positional('folder', {
       type: 'string',
