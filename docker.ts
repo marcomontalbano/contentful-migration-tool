@@ -12,9 +12,14 @@ const argv = yargs
   .argv;
 
 function installDependency(version: string = 'latest'): void {
-  execSync(`yarn add contentful-migration@${ version }`, {
+  execSync(`yarn add contentful-migration@${version}`, {
     encoding: 'utf-8',
     stdio: 'ignore'
+  })
+
+  execSync(`yarn list --pattern contentful-migration --depth=0 --non-interactive --no-progress`, {
+    encoding: 'utf-8',
+    stdio: 'inherit'
   })
 }
 
