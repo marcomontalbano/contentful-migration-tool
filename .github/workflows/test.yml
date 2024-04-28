@@ -15,19 +15,19 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        node: [14.x, 16.x, 18.x]
+        node: [18.x, 20.x, 22.x]
 
     steps:
     - name: Checkout 🛎️
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: pnpm 🧰
-      uses: pnpm/action-setup@v2.2.4
+      uses: pnpm/action-setup@v3
       with:
-        version: 7
+        version: 9
 
     - name: Node 🧰
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node }}
         cache: 'pnpm'

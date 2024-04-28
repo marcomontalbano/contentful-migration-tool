@@ -7,7 +7,7 @@ cp .env.example .env
 
 # fill the env variable
 
-pnpm test:integration
+env $(xargs < .env) pnpm test:integration
 ```
 
 ### Docker image

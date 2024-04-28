@@ -15,8 +15,8 @@
     "test:integration": "jest",
     "build": "tsc",
     "prepublishOnly": "pnpm build",
-    "dep:upgrade:major": "pnpx npm-check-updates -u",
-    "dep:upgrade:minor": "pnpm dep:upgrade:major -t minor"
+    "dep:major": "pnpm dlx npm-check-updates --packageFile '**/package.json' -u",
+    "dep:minor": "pnpm dep:major -t minor"
   },
   "repository": {
     "type": "git",
@@ -37,22 +37,22 @@
   },
   "homepage": "https://github.com/marcomontalbano/contentful-migration-tool#readme",
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "dependencies": {
-    "@types/yargs": "^17.0.22",
+    "@types/yargs": "^17.0.32",
     "chalk": "^4.1.2",
     "contentful-management": "^7.54.2",
-    "yargs": "^17.7.1"
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@types/jest": "^27.5.2",
     "@types/node": "18.14.2",
-    "contentful-migration": "^4.12.9",
+    "contentful-migration": "^4.20.2",
     "dotenv": "^10.0.0",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.5",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
