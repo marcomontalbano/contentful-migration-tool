@@ -43,7 +43,7 @@ function removeDependency(): void {
 }
 
 function runMigration(): void {
-  execSync(`ts-node runner.ts run ${ resolve(__dirname, 'migrations') }`, {
+  execSync(`tsx runner.ts run ${ resolve(__dirname, 'migrations') }`, {
     encoding: 'utf-8',
     stdio: 'inherit'
   })

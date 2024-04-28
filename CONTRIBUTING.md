@@ -27,7 +27,7 @@ export $(xargs < .env) && docker run --rm --tty --name contentful-migration-runn
 ```sh
 pnpm build
 
-env $(xargs < .env) pnpm ts-node ./bin/index.js run ./migrations
+env $(xargs < .env) pnpm tsx ./bin/index.js run ./migrations
 ```
 
 
