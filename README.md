@@ -1,16 +1,16 @@
 # Contentful Migration Tool
 
-[![Test](https://github.com/marcomontalbano/contentful-migration-tool/actions/workflows/test.yml/badge.svg)](https://github.com/marcomontalbano/contentful-migration-tool/actions/workflows/test.yml)
-[![Npm](https://img.shields.io/npm/v/contentful-migration-tool.svg?logo=npm&style=flat&label=version)](https://www.npmjs.com/package/contentful-migration-tool)
-[![Docker](https://img.shields.io/docker/v/marcomontalbano/contentful-migration.svg?logo=docker&logoColor=white&style=flat)](https://hub.docker.com/r/marcomontalbano/contentful-migration)
+[![Test](https://img.shields.io/github/actions/workflow/status/marcomontalbano/contentful-migration-tool/test.yml?style=for-the-badge&label=test)](https://github.com/marcomontalbano/contentful-migration-tool/actions/workflows/test.yml)
+[![Npm](https://img.shields.io/npm/v/contentful-migration-tool.svg?logo=npm&style=for-the-badge&label=version)](https://www.npmjs.com/package/contentful-migration-tool)
+[![Docker](https://img.shields.io/docker/v/marcomontalbano/contentful-migration.svg?logo=docker&logoColor=white&style=for-the-badge)](https://hub.docker.com/r/marcomontalbano/contentful-migration)
 
-Run Contentful migrations easier.
+Run Contentful migrations more easily with just one command.
 
 ## Why another CLI?
 
-I decided to created this CLI when I read this article: "[Integrating migrations in a continuous delivery pipeline with CircleCI](https://www.contentful.com/developers/docs/tutorials/general/continuous-integration-with-circleci/)". I found that approach very interesting, so I decided to build something very close to that.
+I decided to create this CLI when I read this article: "[Integrating migrations in a continuous delivery pipeline with CircleCI](https://www.contentful.com/developers/docs/tutorials/general/continuous-integration-with-circleci/)". I found that approach very interesting, so I decided to build something very close to that.
 
-With this CLI you can run migrations easier and keep track of migrations that you have already run.
+With this CLI you can run migrations easier and keep track of migrations you already run.
 
 You can integrate this into your existing CI without any effort.
 
@@ -19,7 +19,7 @@ You can integrate this into your existing CI without any effort.
 
 The official [`contentful-migration`](https://github.com/contentful/contentful-migration) is a peerDependency, so it is required.
 
-You can run directly this command:
+You can run this command:
 
 ```sh
 npx -p contentful-migration@latest -p contentful-migration-tool@latest contentful-migration-tool run ./migrations
@@ -59,7 +59,7 @@ Remember to set the required environment variables before running the above comm
 
 ## Docker usage
 
-With this Docker image you don't even need Node.js
+With this Docker image, you don't even need Node.js
 
 ```sh
 docker run --rm --tty --name contentful-migration-runner -e CONTENT_MANAGEMENT_TOKEN=$CONTENT_MANAGEMENT_TOKEN -e SPACE_ID=$SPACE_ID -e ENVIRONMENT_ID=$ENVIRONMENT_ID -v $(pwd)/migrations:/app/migrations marcomontalbano/contentful-migration
@@ -71,7 +71,7 @@ docker run --rm --tty --name contentful-migration-runner -e CONTENT_MANAGEMENT_T
 
 * **`CONTENT_MANAGEMENT_TOKEN`** - ***required*** - Contentful Content Management Token. You can create one from the section *API keys* under your space settings.
 
-* **`SPACE_ID`** - ***required*** - Contentful Space ID. You can get the Space ID from the section *General settings* under your space settings. The Space ID is also visibile in the url.
+* **`SPACE_ID`** - ***required*** - Contentful Space ID. You can get the Space ID from the section *General settings* under your space settings. The Space ID is also visible in the url.
 
 * **`ENVIRONMENT_ID`** - ***required*** - Contentful Environment ID.
 
@@ -88,7 +88,7 @@ docker run --rm --tty --name contentful-migration-runner -e CONTENT_MANAGEMENT_T
 
 Either you use **Docker** or **CLI**, you should create a `/migrations` (or whatever name) folder. This folder will contain all your migration description files.
 
-A migration description file is a `.js` or `.ts` file that contains a migration script. This scripts are written using [Contentful Migration](https://github.com/contentful/contentful-migration) syntax *which you are already familiar with*.
+A migration description file is a `.js` or `.ts` file that contains a migration script. These scripts are written using [Contentful Migration](https://github.com/contentful/contentful-migration) syntax *which you are already familiar with*.
 
 The filename must follow this naming convention:
 
