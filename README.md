@@ -35,14 +35,14 @@ npm install --save-dev contentful-migration@latest contentful-migration-tool@lat
 npx contentful-migration-tool run ./migrations
 ```
 
-If you use **TypeScript**, you will also need **ts-node** to run TypeScript migrations:
+If you use **TypeScript**, you will also need **tsx** to run TypeScript migrations:
 
 ```sh
 # install dependencies
-npm install --save-dev contentful-migration@latest contentful-migration-tool@latest ts-node
+npm install --save-dev contentful-migration@latest contentful-migration-tool@latest tsx
 
 # run migrations
-npx ts-node ./node_modules/.bin/contentful-migration-tool run ./migrations
+npx tsx ./node_modules/.bin/contentful-migration-tool run ./migrations
 ```
 
 Remember to set the required environment variables before running the above commands.
